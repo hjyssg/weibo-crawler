@@ -1987,9 +1987,21 @@ def handle_config_renaming(config, oldName, newName):
         config[newName] = config[oldName]
         del config[oldName]
 
+def get_config_fn():
+    """获取config.json文件信息"""
+    if len(sys.argv) > 1:
+        config_filename = sys.argv[1]
+    else:
+        config_filename = "config.json"
+
+    return config_filename
+
+
 def get_config():
     """获取config.json文件信息"""
-    config_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + "config.json"
+    config_filename = get_config_fn()
+
+    config_path = os.path.split(os.path.realpath(__file__))[0] + os.sep + config_filename
     if not os.path.isfile(config_path):
         logger.warning(
             "当前路径：%s 不存在配置文件config.json",
